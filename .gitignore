@@ -1,0 +1,71 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log
+npm-debug.log
+
+# Env files (local secrets)
+.env
+.env.*.local
+.env.local
+!.env.example
+
+# Build outputs
+/dist
+/build
+/out
+/.next
+/.vercel
+/.parcel-cache
+/.turbo
+/.cache
+/.vite
+
+# Production
+/public/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test coverage
+coverage/
+jest-cache/
+jest/
+.cache-jest
+
+# TypeScript
+*.tsbuildinfo
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.pem
+*.key
+.envrc
+node_repl_history
+
+
+env.example
+.env.test
+.env.production
+.env.staging
+.env
