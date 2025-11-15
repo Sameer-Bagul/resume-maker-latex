@@ -255,13 +255,78 @@ export default function Preview() {
 
             {/* Achievements Section */}
             {resume.includeAchievements && resume.achievements && resume.achievements.length > 0 && (
-              <div className="py-6">
+              <div className="border-b border-border py-6">
                 <h2 className="font-heading text-2xl font-bold text-foreground">Achievements</h2>
                 <ul className="mt-3 space-y-2">
                   {resume.achievements.map((achievement, i) => (
                     <li key={i} className="text-sm text-foreground">• {achievement}</li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {/* Social Links Section */}
+            {resume.includeSocialLinks && (resume.githubUrl || resume.linkedinUrl || resume.youtubeUrl || resume.portfolioUrl) && (
+              <div className="py-6">
+                <h2 className="font-heading text-2xl font-bold text-foreground">Links</h2>
+                <div className="mt-3 space-y-2">
+                  {resume.githubUrl && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-foreground">GitHub:</span>
+                      <a 
+                        href={resume.githubUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                        data-testid="link-github"
+                      >
+                        {resume.githubUrl}
+                      </a>
+                    </div>
+                  )}
+                  {resume.linkedinUrl && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-foreground">LinkedIn:</span>
+                      <a 
+                        href={resume.linkedinUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                        data-testid="link-linkedin"
+                      >
+                        {resume.linkedinUrl}
+                      </a>
+                    </div>
+                  )}
+                  {resume.youtubeUrl && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-foreground">YouTube:</span>
+                      <a 
+                        href={resume.youtubeUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                        data-testid="link-youtube"
+                      >
+                        {resume.youtubeUrl}
+                      </a>
+                    </div>
+                  )}
+                  {resume.portfolioUrl && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-foreground">Portfolio:</span>
+                      <a 
+                        href={resume.portfolioUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                        data-testid="link-portfolio"
+                      >
+                        {resume.portfolioUrl}
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </Card>
