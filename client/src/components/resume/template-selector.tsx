@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import type { Resume } from "@shared/schema";
+import type { FormHandle } from "@/components/resume/personal-details-form";
 
 const TEMPLATES = [
   {
@@ -42,7 +43,7 @@ interface TemplateSelectorProps {
   isSaving: boolean;
 }
 
-export function TemplateSelector({ resume, onSave, isSaving }: TemplateSelectorProps) {
+export const TemplateSelector = forwardRef<FormHandle, TemplateSelectorProps>(({ resume, onSave, isSaving }, ref) => {
   const [selectedTemplate, setSelectedTemplate] = useState(resume.templateId || "modern");
 
   const handleSelect = (templateId: string) => {
@@ -52,6 +53,10 @@ export function TemplateSelector({ resume, onSave, isSaving }: TemplateSelectorP
   const handleSave = () => {
     onSave({ templateId: selectedTemplate });
   };
+
+  useImperativeHandle(ref, () => ({
+    getCurrentData: () => ({ templateId: selectedTemplate }),
+  }));
 
   return (
     <div className="space-y-6">
@@ -115,15 +120,7 @@ export function TemplateSelector({ resume, onSave, isSaving }: TemplateSelectorP
             ATS Score: {TEMPLATES.find(t => t.id === selectedTemplate)?.atsScore}%
           </p>
         </div>
-        <Button
-          onClick={handleSave}
-          disabled={isSaving}
-          data-testid="button-save-template"
-          className="hover-elevate active-elevate-2"
-        >
-          {isSaving ? "Saving..." : "Save Template"}
-        </Button>
       </div>
     </div>
   );
-}
+});

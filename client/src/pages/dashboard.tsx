@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -11,17 +12,19 @@ import {
   StepNavigator,
   ResumeStepActions,
 } from '@/features/resume/components';
+import type { FormHandle } from '@/components/resume/personal-details-form';
 
 export default function Dashboard() {
   const { user, isLoading: authLoading } = useGuardedRoute();
   const { toast } = useToast();
+  const formRef = useRef<FormHandle>(null);
   
   const {
     currentStep,
     currentStepData,
     progress,
-    handleNext,
-    handlePrevious,
+    handleNext: originalHandleNext,
+    handlePrevious: originalHandlePrevious,
     goToStep,
     isFirstStep,
     isLastStep,
@@ -63,6 +66,28 @@ export default function Dashboard() {
     saveResumeMutation.mutate(data);
   };
 
+  const autoSaveAndNavigate = async (navigateFn: () => void) => {
+    if (formRef.current?.getCurrentData) {
+      try {
+        const currentData = formRef.current.getCurrentData();
+        if (currentData && Object.keys(currentData).length > 0) {
+          handleSave(currentData);
+        }
+      } catch (error) {
+        console.log('Auto-save skipped for this form:', error);
+      }
+    }
+    navigateFn();
+  };
+
+  const handleNext = () => {
+    autoSaveAndNavigate(originalHandleNext);
+  };
+
+  const handlePrevious = () => {
+    autoSaveAndNavigate(originalHandlePrevious);
+  };
+
   if (authLoading || resumeLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -92,6 +117,7 @@ export default function Dashboard() {
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <Card className="mx-auto max-w-4xl p-6 sm:p-8">
           <CurrentStepComponent
+            ref={formRef}
             resume={resume || {}}
             onSave={handleSave}
             isSaving={saveResumeMutation.isPending}

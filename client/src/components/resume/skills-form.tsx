@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
 import type { Resume, Skill } from "@shared/schema";
+import type { FormHandle } from "@/components/resume/personal-details-form";
 
 const formSchema = z.object({
   skillName: z.string(),
@@ -24,7 +25,7 @@ interface SkillsFormProps {
   isSaving: boolean;
 }
 
-export function SkillsForm({ resume, onSave, isSaving }: SkillsFormProps) {
+export const SkillsForm = forwardRef<FormHandle, SkillsFormProps>(({ resume, onSave, isSaving }, ref) => {
   const [skills, setSkills] = useState<Skill[]>(resume.skills || []);
   
   const form = useForm<FormData>({
@@ -62,6 +63,13 @@ export function SkillsForm({ resume, onSave, isSaving }: SkillsFormProps) {
       includeSkills: form.getValues("includeSkills"),
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    getCurrentData: () => ({
+      skills,
+      includeSkills: form.getValues("includeSkills"),
+    }),
+  }));
 
   return (
     <Form {...form}>
@@ -178,18 +186,8 @@ export function SkillsForm({ resume, onSave, isSaving }: SkillsFormProps) {
               </div>
             </div>
           )}
-
-          <Button
-            type="button"
-            onClick={handleSave}
-            disabled={isSaving}
-            data-testid="button-save-skills"
-            className="hover-elevate active-elevate-2"
-          >
-            {isSaving ? "Saving..." : "Save Skills"}
-          </Button>
         </div>
       </div>
     </Form>
   );
-}
+});

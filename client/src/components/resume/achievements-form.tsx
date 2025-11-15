@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import type { Resume } from "@shared/schema";
+import type { FormHandle } from "@/components/resume/personal-details-form";
 
 interface AchievementsFormProps {
   resume: Partial<Resume>;
@@ -13,7 +14,7 @@ interface AchievementsFormProps {
   isSaving: boolean;
 }
 
-export function AchievementsForm({ resume, onSave, isSaving }: AchievementsFormProps) {
+export const AchievementsForm = forwardRef(function AchievementsForm({ resume, onSave, isSaving }: AchievementsFormProps, ref: React.Ref<FormHandle>) {
   const [achievements, setAchievements] = useState<string[]>(resume.achievements || []);
   const [includeAchievements, setIncludeAchievements] = useState(resume.includeAchievements ?? true);
   const [currentAchievement, setCurrentAchievement] = useState("");
@@ -35,6 +36,13 @@ export function AchievementsForm({ resume, onSave, isSaving }: AchievementsFormP
       includeAchievements,
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    getCurrentData: () => ({
+      achievements,
+      includeAchievements,
+    }),
+  }));
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -121,16 +129,7 @@ export function AchievementsForm({ resume, onSave, isSaving }: AchievementsFormP
             </p>
           </div>
         )}
-
-        <Button
-          onClick={handleSave}
-          disabled={isSaving}
-          data-testid="button-save-achievements"
-          className="hover-elevate active-elevate-2"
-        >
-          {isSaving ? "Saving..." : "Save Achievements"}
-        </Button>
       </div>
     </div>
   );
-}
+});

@@ -122,8 +122,8 @@ export default function Preview() {
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
-        description: error.message || "Failed to download LaTeX PDF. Please try again.",
+        title: "LaTeX PDF Not Available",
+        description: "LaTeX is not installed on this server. Please download the LaTeX source file (.tex) instead and compile it locally with your own LaTeX installation.",
         variant: "destructive",
       });
     },
@@ -238,6 +238,7 @@ export default function Preview() {
                 variant="outline"
                 data-testid="button-download-latex-pdf"
                 className="hover-elevate active-elevate-2"
+                title="Note: LaTeX PDF generation requires LaTeX to be installed on the server. If unavailable, download the .tex source instead."
               >
                 <FileCode className="mr-2 h-4 w-4" />
                 {downloadLatexMutation.isPending ? "Generating..." : "LaTeX PDF"}
@@ -479,6 +480,7 @@ export default function Preview() {
               variant="outline"
               data-testid="button-download-latex"
               className="hover-elevate active-elevate-2"
+              title="Note: LaTeX PDF generation requires LaTeX to be installed on the server. If unavailable, download the .tex source instead."
             >
               <FileCode className="mr-2 h-4 w-4" />
               {downloadLatexMutation.isPending ? "Generating..." : "Download LaTeX PDF"}

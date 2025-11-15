@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { forwardRef, useImperativeHandle } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,7 +26,11 @@ interface PersonalDetailsFormProps {
   isSaving: boolean;
 }
 
-export function PersonalDetailsForm({ resume, onSave, isSaving }: PersonalDetailsFormProps) {
+export interface FormHandle {
+  getCurrentData: () => Partial<Resume>;
+}
+
+export const PersonalDetailsForm = forwardRef<FormHandle, PersonalDetailsFormProps>(({ resume, onSave, isSaving }, ref) => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,6 +47,13 @@ export function PersonalDetailsForm({ resume, onSave, isSaving }: PersonalDetail
   const onSubmit = (data: FormData) => {
     onSave(data);
   };
+
+  useImperativeHandle(ref, () => ({
+    getCurrentData: () => {
+      const values = form.getValues();
+      return values;
+    },
+  }));
 
   return (
     <Form {...form}>
@@ -184,17 +195,8 @@ export function PersonalDetailsForm({ resume, onSave, isSaving }: PersonalDetail
               </FormItem>
             )}
           />
-
-          <Button 
-            type="submit" 
-            disabled={isSaving}
-            data-testid="button-save-personal"
-            className="hover-elevate active-elevate-2"
-          >
-            {isSaving ? "Saving..." : "Save Changes"}
-          </Button>
         </form>
       </div>
     </Form>
   );
-}
+});
