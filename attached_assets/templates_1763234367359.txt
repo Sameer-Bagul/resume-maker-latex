@@ -1,0 +1,521 @@
+%-------------------------
+% Resume Template in LaTeX
+% Author : Sameer Bagul
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+% Packages
+\usepackage[empty]{fullpage}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{tikz} % for round photo
+\RequirePackage{xcolor}
+
+% Color Scheme
+\definecolor{cvblue}{HTML}{0E5484}
+\definecolor{darkcolor}{HTML}{0F4539}
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+
+\colorlet{name}{black}
+\colorlet{heading}{darkcolor}
+\colorlet{body}{LightGrey}
+
+% Fonts
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+% Page layout
+\usepackage[top=0.2in, bottom=0.2in, left=0.3in, right=0.3in]{geometry}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\linespread{0.95}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{itemsep=2.5pt, topsep=4pt, parsep=1pt, partopsep=0pt}
+\setmainfont[
+    BoldFont = {Cormorant Garamond Bold}, % ensure bold variant exists
+    ItalicFont = {Cormorant Garamond Italic},
+    BoldItalicFont = {Cormorant Garamond Bold Italic}
+]{Cormorant Garamond}
+
+% Section formatting
+\titleformat{\section}{\vspace{-2pt}\scshape\raggedright\large\bfseries}{}{0em}{}[\color{black}\titlerule \vspace{-4pt}]
+\titlespacing*{\section}{0pt}{9pt}{6pt}
+
+%-------------------------
+% Custom Commands
+% \newcommand{\resumeItem}[1]{\item\footnotesize{#1 \vspace{-1pt}}}
+\newcommand{\resumeItem}[1]{\item\normalsize{#1 \vspace{-1pt}}}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1.5pt}\item
+  \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{\large#1} & \textbf{\small #2} \\
+    \textit{\large#3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-5pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in, label={}, itemsep=2.5pt, topsep=4pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.1in, itemsep=2pt, topsep=3pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+%-------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING WITH PHOTO----------
+\begin{center}
+\begin{minipage}{0.75\textwidth}
+    {\huge \textbf{Sameer Bagul}} \\[2pt]
+    {\large \textbf{Full-Stack }\& \textbf{AI Developer} | \textbf{DevOps Engineer}} \\[2pt]
+    Pune, India \\
+    +91 7841941033 ~
+    \href{mailto:sameerbagul2004@gmail.com}{\color{cvblue}{sameerbagul2004@gmail.com}} ~
+    \href{https://sameerbagul.me/}{\color{cvblue}{Portfolio}} ~
+    \href{https://www.linkedin.com/in/sameer-bagul/}{\color{cvblue}{linkedin.com/in/sameer-bagul}} ~
+    \href{https://github.com/Sameer-Bagul}{\color{cvblue}{GitHub}}
+\end{minipage}%
+\hfill%
+\begin{minipage}{0.2\textwidth}
+    \vspace{-5pt} % adjust vertical alignment
+    \begin{tikzpicture}[baseline]
+        \clip (0,0) circle (1.5cm); % radius of the circular photo
+        \node at (0,0) {\includegraphics[width=3cm]{sameer.png}}; % size of the photo
+    \end{tikzpicture}
+\end{minipage}
+
+\vspace{-10pt} % move up next section
+
+\end{center}
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0in, label={}]
+\small{ % <-- increased from \footnotesize to \small
+\item{
+\textbf{Programming Languages:} JavaScript, TypeScript, Python, Java, C, C++ \\
+\textbf{Frameworks/Libraries:} MERN Stack, Next.js, React.js, Three.js, R3F \\
+\textbf{Databases:} MongoDB, SQL, Firebase \\
+\textbf{DevOps \& Tools:} Git, Docker, Nginx, Portainer, Postman, VS Code \\
+\textbf{AI/ML:} PyTorch, TensorFlow, Hugging Face, LangChain, LlamaIndex, OpenAI API, Pinecone, FAISS, REST APIs, Streamlit, Gradio, Prompt Engineering, NLP
+}}
+\end{itemize}
+
+
+%-----------EDUCATION----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading
+{PES Modern College of Engineering, Pune}{Pune}
+{Bachelor of Technology - Information Technology \hfill \textbf{CGPA: 8.21 / 10}}{\textbf{Nov 2022 – June 2026}}
+\resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+    % Hashnode / Bug0 Experience
+    \resumeSubheading
+      {Software Engineer}{Nov 2025 – Present}
+      {Hashnode (Bug0), Remote}{}
+      \resumeItemListStart
+        \resumeItem{Contributing to the development of AI-integrated developer tools and scalable backend systems.}
+        \resumeItem{Collaborating with cross-functional teams to enhance the \textbf{Bug0} platform's performance and developer experience.}
+        \resumeItem{Building and maintaining CI/CD workflows, containerized services, and deployment pipelines using \textbf{Docker} and \textbf{GitHub Actions}.}
+        \resumeItem{Optimizing system reliability and improving feature delivery speed by \textbf{20\%} through efficient DevOps automation.}
+      \resumeItemListEnd
+
+    % LabsCheck Experience
+    \resumeSubheading
+      {Full Stack Software Developer \& DevOps Engineer Intern}{Aug 2025 – Oct 2025}
+      {LabsCheck, Pune}{}
+      \resumeItemListStart
+        \resumeItem{Designed and implemented scalable full-stack systems to optimize business processes across departments.}
+        \resumeItem{Automated Marketing and Lead operations using an \textbf{AI agent}, handling over \textbf{100,000 leads} for outreach and follow-ups.}
+        \resumeItem{Developed an end-to-end medical lab platform, providing price-sorted recommendations and seamless user experience.}
+        \resumeItem{Deployed applications using \textbf{Nginx, Docker, Portainer, and CI/CD pipelines}, achieving \textbf{99\% uptime}.}
+      \resumeItemListEnd
+
+    % Walnut Solutions Experience
+    \resumeSubheading
+      {Web Developer Intern}{Jan 2025 – June 2025}
+      {Walnut Solutions, Dhule}{}
+      \resumeItemListStart
+        \resumeItem{Developed and deployed responsive web applications using \textbf{Next.js}, improving SEO and user engagement by \textbf{30\%}.}
+        \resumeItem{Integrated RESTful APIs and interactive UI components to reduce page load times by \textbf{30\%}.}
+        \resumeItem{Optimized websites for SEO and accessibility, boosting organic traffic and search rankings.}
+        \resumeItem{Delivered high-quality web solutions while collaborating with remote teams; recognized for initiative and efficiency.}
+      \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{HireMe | Skillify – Smart India Hackathon Winner}{\href{https://github.com/Sameer-Bagul/Wcareer.git}{GitHub} ~|~ \href{https://github.com/Sameer-Bagul/Wcareer.git}{Preview}}
+{Tech Stack: MERN, Electron.js, MongoDB Atlas, Render, Python, Flask, LLMs}{Dec 2024}
+\resumeItemListStart
+\resumeItem{Developed an AI-powered skill development platform supporting over 1,000 users.}
+\resumeItem{Fine-tuned ML models to generate personalized learning roadmaps based on GMAT-style assessments.}
+\resumeItem{Automated skill, certification, and career path recommendations, increasing user engagement by \textbf{35\%}.}
+\resumeItem{Awarded \textbf{Smart India Hackathon Winner} for innovative AI-driven career guidance solutions.}
+\resumeItemListEnd
+
+\resumeSubheading
+{create-mern-auth – NPM Package}{\href{https://www.npmjs.com/package/create-mern-auth}{NPM} ~|~ \href{https://github.com/Sameer-Bagul/create-mern-auth}{GitHub}}
+{Tech Stack: Node.js, Express.js, MongoDB, React.js, JWT, Nodemailer}{Sept 2025}
+\resumeItemListStart
+\resumeItem{Built a developer-first CLI tool to instantly scaffold production-ready MERN authentication projects using a single command — \texttt{npx create-mern-auth my-app}.}
+\resumeItem{Included complete setup with \textbf{JWT + OTP authentication}, \textbf{Email verification}, \textbf{Password reset}, and \textbf{Protected routes}.}
+\resumeItem{Pre-configured \textbf{client and server folders} with ready-to-use dashboards, themes, and landing pages.}
+\resumeItem{Designed to save developers hours of repetitive setup — ideal for hackathons, SaaS projects, and AI tool prototypes.}
+\resumeItemListEnd
+
+\resumeSubheading
+{Evento – College Event Management Platform}{\href{https://github.com/Sameer-Bagul/event-management-application}{GitHub} ~|~ \href{https://evento.sameerbagul.me/}{Preview}}
+{Tech Stack: Next.js, MongoDB Atlas, Render}{Mar 2025}
+\resumeItemListStart
+\resumeItem{Developed a Next.js-based platform for managing college events, RSVPs, and notifications.}
+\resumeItem{Implemented centralized dashboards providing real-time updates and analytics for organizers.}
+\resumeItem{Streamlined event planning and communication, increasing event participation by \textbf{25\%}.}
+\resumeItem{Optimized platform performance to support 500+ concurrent users with minimal latency.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+
+%-----------ACHIEVEMENTS AND LEADERSHIP---------------
+\section{Achievements and Leadership}
+\resumeItemListStart
+\resumeItem{Grand Finalist and Runner-up in the \textbf{Smart India Hackathon 2024}, receiving a cash prize of \textbf{Rs. 30,000}.}
+\resumeItem{National Winner for a problem statement in the \textbf{Innovate You Hackathon 2025}, awarded \textbf{Rs. 10,000}.}
+\resumeItem{Served as \textbf{Technical Lead of the APP Club at PESMCOE}, mentoring over 200 students and guiding multiple projects to completion.}
+\resumeItemListEnd
+
+
+\end{document}
+
+---
+
+%-------------------------
+% Resume Template in LaTeX
+% Author : Sameer Bagul
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+% Packages
+\usepackage[empty]{fullpage}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{tikz} % for round photo
+\RequirePackage{xcolor}
+
+% Color Scheme
+\definecolor{cvblue}{HTML}{0E5484}
+\definecolor{darkcolor}{HTML}{0F4539}
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+
+\colorlet{name}{black}
+\colorlet{heading}{darkcolor}
+\colorlet{body}{LightGrey}
+
+% Fonts
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+% Page layout
+\usepackage[top=0.2in, bottom=0.2in, left=0.3in, right=0.3in]{geometry}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\linespread{0.95}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{itemsep=2.5pt, topsep=4pt, parsep=1pt, partopsep=0pt}
+\setmainfont[
+    BoldFont = {Cormorant Garamond Bold}, % ensure bold variant exists
+    ItalicFont = {Cormorant Garamond Italic},
+    BoldItalicFont = {Cormorant Garamond Bold Italic}
+]{Cormorant Garamond}
+
+% Section formatting
+\titleformat{\section}{\vspace{-2pt}\scshape\raggedright\large\bfseries}{}{0em}{}[\color{black}\titlerule \vspace{-4pt}]
+\titlespacing*{\section}{0pt}{9pt}{6pt}
+
+%-------------------------
+% Custom Commands
+% \newcommand{\resumeItem}[1]{\item\footnotesize{#1 \vspace{-1pt}}}
+\newcommand{\resumeItem}[1]{\item\normalsize{#1 \vspace{-1pt}}}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1.5pt}\item
+  \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{\large#1} & \textbf{\small #2} \\
+    \textit{\large#3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-5pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in, label={}, itemsep=2.5pt, topsep=4pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.1in, itemsep=2pt, topsep=3pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+%-------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\textbf{\Huge Sameer Bagul}} \\[6pt] % adds gap after name
+    {\large Full-Stack \& AI Developer | DevOps Engineer} \\[4pt] % adds gap before contact
+    \small +91 7841941033 $\cdot$ 
+    \href{mailto:sameerbagul2004@gmail.com}{\underline{sameerbagul2004@gmail.com}} $\cdot$ 
+    \href{https://www.linkedin.com/in/sameer-bagul/}{\underline{LinkedIn}} $\cdot$ 
+    \href{https://github.com/Sameer-Bagul}{\underline{GitHub}} $\cdot$ 
+    \href{https://sameerbagul.me/}{\underline{Portfolio}}
+\end{center}
+
+
+%-----------EDUCATION----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading
+{PES Modern College of Engineering, Pune}{Pune}
+{Bachelor of Technology - Information Technology \hfill \textbf{CGPA: 8.21 / 10}}{\textbf{Nov 2022 – June 2026}}
+\resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+    % LabsCheck Experience
+    \resumeSubheading
+      {Full Stack Software Developer \& DevOps Engineer}{Aug 2025 – Present}
+      {LabsCheck – Business Process Transformation Services, Pune}{}
+      \resumeItemListStart
+        \resumeItem{Designed and implemented scalable full-stack systems to optimize business processes across departments.}
+        \resumeItem{Automated Marketing and Lead operations using an \textbf{AI agent}, handling over \textbf{100,000 leads} for outreach and follow-ups.}
+        \resumeItem{Developed an end-to-end medical lab platform, providing price-sorted recommendations and seamless user experience.}
+        \resumeItem{Deployed applications using \textbf{Nginx, Docker, Portainer, and CI/CD pipelines}, achieving \textbf{99\% uptime}.}
+      \resumeItemListEnd
+
+    % Walnut Solutions Experience
+    \resumeSubheading
+      {Web Developer Intern}{Jan 2025 – June 2025}
+      {Walnut Solutions, Dhule}{}
+      \resumeItemListStart
+        \resumeItem{Developed and deployed responsive web applications using \textbf{Next.js}, improving SEO and user engagement by \textbf{30\%}.}
+        \resumeItem{Integrated RESTful APIs and interactive UI components to reduce page load times by \textbf{30\%}.}
+        \resumeItem{Optimized websites for SEO and accessibility, boosting organic traffic and search rankings.}
+        \resumeItem{Delivered high-quality web solutions while collaborating with remote teams; recognized for initiative and efficiency.}
+      \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+%-----------PROJECTS-----------
+
+%-----------PROJECTS-----------
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{HireMe | Skillify – Smart India Hackathon Winner}{\href{https://github.com/Sameer-Bagul/Wcareer.git}{GitHub} ~|~ \href{https://github.com/Sameer-Bagul/Wcareer.git}{Preview}}
+{Tech Stack: MERN, Electron.js, MongoDB Atlas, Render, Python, Flask, LLMs}{Dec 2024}
+\resumeItemListStart
+\resumeItem{Developed an AI-powered skill development platform supporting over 1,000 users.}
+\resumeItem{Fine-tuned ML models to generate personalized learning roadmaps based on GMAT-style assessments.}
+\resumeItem{Automated skill, certification, and career path recommendations, increasing user engagement by \textbf{35\%}.}
+\resumeItem{Awarded \textbf{Smart India Hackathon Winner} for innovative AI-driven career guidance solutions.}
+\resumeItemListEnd
+
+\resumeSubheading
+{BillCraft – Freelance Work}{\href{https://github.com/Sameer-Bagul/Wcareer.git}{GitHub} ~|~ \href{https://billcraft.sameerbagul.me/landing}{Preview}}
+{Tech Stack: MERN, Electron.js, MongoDB Atlas, Render}{Apr 2025}
+\resumeItemListStart
+\resumeItem{Designed and implemented a multi-shop billing platform for a construction company managing 18+ outlets and 200+ products.}
+\resumeItem{Integrated business intelligence dashboards providing actionable insights for inventory and sales management.}
+\resumeItem{Managed 2,000+ customer records using data-driven reporting to improve operational accuracy.}
+\resumeItem{Optimized billing workflows, reducing manual errors and improving overall efficiency.}
+\resumeItemListEnd
+
+\resumeSubheading
+{Evento – College Event Management Platform}{\href{https://github.com/Sameer-Bagul/event-management-application}{GitHub} ~|~ \href{https://evento.sameerbagul.me/}{Preview}}
+{Tech Stack: Next.js, MongoDB Atlas, Render}{Mar 2025}
+\resumeItemListStart
+\resumeItem{Developed a Next.js-based platform for managing college events, RSVPs, and notifications.}
+\resumeItem{Implemented centralized dashboards providing real-time updates and analytics for organizers.}
+\resumeItem{Streamlined event planning and communication, increasing event participation by \textbf{25\%}.}
+\resumeItem{Optimized platform performance to support 500+ concurrent users with minimal latency.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0in, label={}]
+\small{ % <-- increased from \footnotesize to \small
+\item{
+\textbf{Programming Languages:} JavaScript, TypeScript, Python, Java, C, C++ \\
+\textbf{Frameworks/Libraries:} MERN Stack, Next.js, React.js, Three.js, R3F \\
+\textbf{Databases:} MongoDB, SQL, Firebase \\
+\textbf{DevOps \& Tools:} Git, Docker, Nginx, Portainer, Postman, VS Code \\
+\textbf{AI/ML:} PyTorch, TensorFlow, Hugging Face, LangChain, LlamaIndex, OpenAI API, Pinecone, FAISS, REST APIs, Streamlit, Gradio, Prompt Engineering, NLP
+}}
+\end{itemize}
+
+
+%-----------ACHIEVEMENTS AND LEADERSHIP---------------
+\section{Achievements and Leadership}
+\resumeItemListStart
+\resumeItem{Grand Finalist and Runner-up in the \textbf{Smart India Hackathon 2024}, receiving a cash prize of \textbf{Rs. 30,000}.}
+\resumeItem{National Winner for a problem statement in the \textbf{Innovate You Hackathon 2025}, awarded \textbf{Rs. 10,000}.}
+\resumeItem{Served as \textbf{Technical Lead of the APP Club at PESMCOE}, mentoring over 200 students and guiding multiple projects to completion.}
+\resumeItemListEnd
+
+
+\end{document}
+
+
+---
+
+\documentclass{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.4 in,top=0.4in,right=0.4 in,bottom=0.4in]{geometry} % Document margins
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}} 
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\name{Firstname Lastname} % Your name
+% You can merge both of these into a single line, if you do not have a website.
+\address{+1(123) 456-7890 \\ San Francisco, CA} 
+\address{\href{mailto:contact@faangpath.com}{contact@faangpath.com} \\ \href{https://linkedin.com/company/faangpath}{linkedin.com/company/faangpath} \\ \href{www.faangpath.com}{www.faangpath.com}}  %
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	OBJECTIVE
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{OBJECTIVE}
+
+{Software Engineer with 2+ years of experience in XXX, seeking full-time XXX roles.}
+
+
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Education}
+
+{\bf Master of Computer Science}, Stanford University \hfill {Expected 2020}\\
+Relevant Coursework: A, B, C, and D.
+
+{\bf Bachelor of Computer Science}, Stanford University \hfill {2014 - 2017}
+%Minor in Linguistics \smallskip \\
+%Member of Eta Kappa Nu \\
+%Member of Upsilon Pi Epsilon \\
+
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+% TECHINICAL STRENGTHS	
+%----------------------------------------------------------------------------------------
+\begin{rSection}{SKILLS}
+
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
+Technical Skills & A, B, C, D
+\\
+Soft Skills & A, B, C, D\\
+XYZ & A, B, C, D\\
+\end{tabular}\\
+\end{rSection}
+
+\begin{rSection}{EXPERIENCE}
+
+\textbf{Role Name} \hfill Jan 2017 - Jan 2019\\
+Company Name \hfill \textit{San Francisco, CA}
+ \begin{itemize}
+    \itemsep -3pt {} 
+     \item Achieved X\% growth for XYZ using A, B, and C skills.
+     \item Led XYZ which led to X\% of improvement in ABC
+    \item Developed XYZ that did A, B, and C using X, Y, and Z. 
+ \end{itemize}
+ 
+\textbf{Role Name} \hfill Jan 2017 - Jan 2019\\
+Company Name \hfill \textit{San Francisco, CA}
+ \begin{itemize}
+    \itemsep -3pt {} 
+     \item Achieved X\% growth for XYZ using A, B, and C skills.
+     \item Led XYZ which led to X\% of improvement in ABC
+    \item Developed XYZ that did A, B, and C using X, Y, and Z. 
+ \end{itemize}
+
+\end{rSection} 
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{PROJECTS}
+\vspace{-1.25em}
+\item \textbf{Hiring Search Tool.} {Built a tool to search for Hiring Managers and Recruiters by using ReactJS, NodeJS, Firebase and boolean queries. Over 25000 people have used it so far, with 5000+ queries being saved and shared, and search results even better than LinkedIn! \href{https://hiring-search.careerflow.ai/}{(Try it here)}}
+\item \textbf{Short Project Title.} {Build a project that does something and had quantified success using A, B, and C. This project's description spans two lines and also won an award.}
+\item \textbf{Short Project Title.} {Build a project that does something and had quantified success using A, B, and C. This project's description spans two lines and also won an award.}
+\end{rSection} 
+
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Extra-Curricular Activities} 
+\begin{itemize}
+    \item 	Actively write \href{https://www.faangpath.com/blog/}{blog posts} and social media posts (\href{https://www.tiktok.com/@faangpath}{TikTok}, \href{https://www.instagram.com/faangpath/?hl=en}{Instagram}) viewed by over 20K+ job seekers per week to help people with best practices to land their dream jobs. 
+    \item	Sample bullet point.
+\end{itemize}
+
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Leadership} 
+\begin{itemize}
+    \item Admin for the \href{https://discord.com/invite/WWbjEaZ}{FAANGPath Discord community} with over 6000+ job seekers and industry mentors. Actively involved in facilitating online events, career conversations, and more alongside other admins and a team of volunteer moderators! 
+\end{itemize}
+
+
+\end{rSection}
+
+
+\end{document}
+
+
+---
+
