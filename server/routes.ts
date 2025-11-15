@@ -5,6 +5,8 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated, type AuthRequest } from "./auth";
 import { insertResumeSchema, updateResumeSchema } from "@shared/schema";
 import { generateResumePDF } from "./pdf-generator";
+import { generateLatexSource } from "./latex-generator";
+import latex from "node-latex";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup JWT authentication routes
@@ -128,7 +130,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Download resume as PDF
+  // Download resume as PDF (using PDFKit)
   app.post("/api/resumes/download", isAuthenticated, async (req, res) => {
     try {
       const authReq = req as AuthRequest;
@@ -154,6 +156,86 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error generating PDF:", error);
       res.status(500).json({ message: "Failed to generate PDF" });
+    }
+  });
+
+  // Download resume as PDF (using LaTeX)
+  app.post("/api/resumes/download-latex", isAuthenticated, async (req, res) => {
+    try {
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
+      const { resumeId } = req.body;
+      
+      const resume = await storage.getResume(resumeId);
+      
+      if (!resume) {
+        return res.status(404).json({ message: "Resume not found" });
+      }
+      
+      // Verify ownership
+      if (resume.userId !== userId) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+      
+      const latexSource = generateLatexSource(resume);
+      
+      // Generate PDF from LaTeX
+      const pdfStream = latex(latexSource, {
+        inputs: process.cwd(),
+        cmd: 'pdflatex',
+        passes: 2
+      });
+      
+      const chunks: Buffer[] = [];
+      
+      pdfStream.on('data', (chunk: Buffer) => {
+        chunks.push(chunk);
+      });
+      
+      pdfStream.on('end', () => {
+        const pdfBuffer = Buffer.concat(chunks);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${resume.fullName || 'Resume'}.pdf"`);
+        res.send(pdfBuffer);
+      });
+      
+      pdfStream.on('error', (err: Error) => {
+        console.error("LaTeX PDF generation error:", err);
+        res.status(500).json({ message: "Failed to generate PDF from LaTeX" });
+      });
+      
+    } catch (error) {
+      console.error("Error generating LaTeX PDF:", error);
+      res.status(500).json({ message: "Failed to generate PDF" });
+    }
+  });
+
+  // Download LaTeX source code
+  app.post("/api/resumes/download-latex-source", isAuthenticated, async (req, res) => {
+    try {
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
+      const { resumeId } = req.body;
+      
+      const resume = await storage.getResume(resumeId);
+      
+      if (!resume) {
+        return res.status(404).json({ message: "Resume not found" });
+      }
+      
+      // Verify ownership
+      if (resume.userId !== userId) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+      
+      const latexSource = generateLatexSource(resume);
+      
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="${resume.fullName || 'Resume'}.tex"`);
+      res.send(latexSource);
+    } catch (error) {
+      console.error("Error generating LaTeX source:", error);
+      res.status(500).json({ message: "Failed to generate LaTeX source" });
     }
   });
 

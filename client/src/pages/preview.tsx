@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { FileText, Download, ArrowLeft } from "lucide-react";
+import { FileText, Download, ArrowLeft, FileCode } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import type { Resume } from "@shared/schema";
@@ -33,7 +33,7 @@ export default function Preview() {
     enabled: !!user,
   });
 
-  // Download PDF mutation
+  // Download PDF mutation (PDFKit)
   const downloadMutation = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/resumes/download", {
@@ -64,6 +64,78 @@ export default function Preview() {
       toast({
         title: "Error",
         description: "Failed to download resume. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Download LaTeX PDF mutation
+  const downloadLatexMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/resumes/download-latex", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumeId: resume?.id }),
+      });
+      
+      if (!response.ok) throw new Error("Failed to download LaTeX PDF");
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${resume?.fullName || "Resume"}_latex.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Your LaTeX resume PDF has been downloaded.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to download LaTeX PDF. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Download LaTeX source mutation
+  const downloadLatexSourceMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/resumes/download-latex-source", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumeId: resume?.id }),
+      });
+      
+      if (!response.ok) throw new Error("Failed to download LaTeX source");
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${resume?.fullName || "Resume"}.tex`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Your LaTeX source file has been downloaded.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to download LaTeX source. Please try again.",
         variant: "destructive",
       });
     },
@@ -118,7 +190,7 @@ export default function Preview() {
                 Back to Editor
               </a>
             </Button>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <ThemeToggle />
               <Button
                 onClick={() => downloadMutation.mutate()}
@@ -128,6 +200,26 @@ export default function Preview() {
               >
                 <Download className="mr-2 h-4 w-4" />
                 {downloadMutation.isPending ? "Downloading..." : "Download PDF"}
+              </Button>
+              <Button
+                onClick={() => downloadLatexMutation.mutate()}
+                disabled={downloadLatexMutation.isPending}
+                variant="outline"
+                data-testid="button-download-latex-pdf"
+                className="hover-elevate active-elevate-2"
+              >
+                <FileCode className="mr-2 h-4 w-4" />
+                {downloadLatexMutation.isPending ? "Generating..." : "LaTeX PDF"}
+              </Button>
+              <Button
+                onClick={() => downloadLatexSourceMutation.mutate()}
+                disabled={downloadLatexSourceMutation.isPending}
+                variant="outline"
+                data-testid="button-download-latex-source"
+                className="hover-elevate active-elevate-2"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                {downloadLatexSourceMutation.isPending ? "Downloading..." : "LaTeX Source"}
               </Button>
             </div>
           </div>
@@ -332,7 +424,7 @@ export default function Preview() {
           </Card>
 
           {/* Action Buttons */}
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button
               variant="outline"
               asChild
@@ -349,6 +441,26 @@ export default function Preview() {
             >
               <Download className="mr-2 h-4 w-4" />
               {downloadMutation.isPending ? "Downloading..." : "Download PDF"}
+            </Button>
+            <Button
+              onClick={() => downloadLatexMutation.mutate()}
+              disabled={downloadLatexMutation.isPending}
+              variant="outline"
+              data-testid="button-download-latex"
+              className="hover-elevate active-elevate-2"
+            >
+              <FileCode className="mr-2 h-4 w-4" />
+              {downloadLatexMutation.isPending ? "Generating..." : "Download LaTeX PDF"}
+            </Button>
+            <Button
+              onClick={() => downloadLatexSourceMutation.mutate()}
+              disabled={downloadLatexSourceMutation.isPending}
+              variant="outline"
+              data-testid="button-latex-source"
+              className="hover-elevate active-elevate-2"
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              {downloadLatexSourceMutation.isPending ? "Downloading..." : "LaTeX Source (.tex)"}
             </Button>
           </div>
         </div>
