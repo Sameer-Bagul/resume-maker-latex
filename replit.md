@@ -174,7 +174,9 @@ function MyComponent() {
 - `POST /api/resumes` - Create new resume
 - `PATCH /api/resumes/:id` - Update resume
 - `DELETE /api/resumes/:id` - Delete resume
-- `POST /api/resumes/download` - Download resume as PDF
+- `POST /api/resumes/download` - Download resume as PDF (PDFKit)
+- `POST /api/resumes/download-latex` - Download resume as PDF (LaTeX)
+- `POST /api/resumes/download-latex-source` - Download resume as LaTeX source (.tex)
 
 ## Configuration
 
@@ -194,6 +196,19 @@ function MyComponent() {
 - Port: 5173 (internal)
 
 ## Recent Changes
+
+### 2025-11-15: LaTeX PDF Generation Feature
+- **Added LaTeX PDF Generation**
+  - Installed node-latex package for LaTeX compilation
+  - Created comprehensive LaTeX template generator for all resume templates (Modern, Classic, Minimal, Executive)
+  - Added backend routes for LaTeX PDF generation and source download
+  - Enhanced preview page with buttons to download LaTeX PDFs and .tex source files
+  - Fixed missing social links section in preview page
+- **LaTeX Templates Include:**
+  - Professional formatting with proper typography
+  - Template-specific styling (colors, fonts, layouts)
+  - Proper LaTeX escaping for special characters
+  - Support for all resume sections and data
 
 ### 2025-11-15: MERN Stack Conversion
 - **Converted from PostgreSQL to MongoDB Atlas**
@@ -227,7 +242,8 @@ function MyComponent() {
 - Professional resume templates
 - Real-time preview
 - ATS optimization
-- PDF export
+- PDF export (both PDFKit and LaTeX)
+- LaTeX source code download (.tex files)
 - Multiple sections: Personal details, Skills, Education, Projects, Experience, Achievements
 - Social media links integration
 - Dark mode support

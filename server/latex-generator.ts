@@ -32,18 +32,23 @@ function escapeLatex(text: string): string {
     .replace(/\^/g, '\\textasciicircum{}');
 }
 
+function escapeUrl(url: string): string {
+  if (!url) return '';
+  return url.replace(/#/g, '\\#').replace(/%/g, '\\%').replace(/&/g, '\\&');
+}
+
 function generateModernLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
 \\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-\\\usepackage{geometry}
+\\\usepackage[T1]{fontenc}
+\\usepackage{geometry}
 \\usepackage{xcolor}
-\\usepackage{titlesec}
-\\usepackage{enumitem}
-\\\usepackage{hyperref}
-\\usepackage{parskip}
+\\\usepackage{titlesec}
+\\\usepackage{enumitem}
+\\usepackage{hyperref}
+\\\usepackage{parskip}
 
 \\geometry{margin=0.75in}
 \\definecolor{accentcolor}{HTML}{BFFF0B}
@@ -139,7 +144,7 @@ function generateModernLatex(resume: Resume): string {
       }
       
       if (project.url) {
-        sections.push(`{\\small\\color{blue} \\\url{${project.url}}}\\\\`);
+        sections.push(`{\\small\\color{blue} \\url{${escapeUrl(project.url)}}}\\\\`);
       }
       sections.push('\\vspace{0.5em}');
     });
@@ -159,16 +164,16 @@ function generateModernLatex(resume: Resume): string {
     sections.push(`\\section*{LINKS}`);
     
     if (resume.githubUrl) {
-      sections.push(`\\textbf{GitHub:} \\url{${resume.githubUrl}}\\\\`);
+      sections.push(`\\textbf{GitHub:} \\url{${escapeUrl(resume.githubUrl)}}\\\\`);
     }
     if (resume.linkedinUrl) {
-      sections.push(`\\textbf{LinkedIn:} \\\url{${resume.linkedinUrl}}\\\\`);
+      sections.push(`\\textbf{LinkedIn:} \\\url{${escapeUrl(resume.linkedinUrl)}}\\\\`);
     }
     if (resume.youtubeUrl) {
-      sections.push(`\\textbf{YouTube:} \\url{${resume.youtubeUrl}}\\\\`);
+      sections.push(`\\textbf{YouTube:} \\url{${escapeUrl(resume.youtubeUrl)}}\\\\`);
     }
     if (resume.portfolioUrl) {
-      sections.push(`\\textbf{Portfolio:} \\\url{${resume.portfolioUrl}}\\\\`);
+      sections.push(`\\textbf{Portfolio:} \\url{${escapeUrl(resume.portfolioUrl)}}\\\\`);
     }
   }
 
@@ -181,9 +186,9 @@ function generateClassicLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
-\\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-\\usepackage{geometry}
+\\usepackage[utf8]{inputenc}
+\\\usepackage[T1]{fontenc}
+\\\usepackage{geometry}
 \\\usepackage{titlesec}
 \\usepackage{enumitem}
 \\\usepackage{hyperref}
@@ -292,12 +297,12 @@ function generateMinimalLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
-\\\usepackage[utf8]{inputenc}
-\\\usepackage[T1]{fontenc}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
 \\usepackage{geometry}
 \\\usepackage{titlesec}
-\\\usepackage{enumitem}
-\\\usepackage{hyperref}
+\\usepackage{enumitem}
+\\usepackage{hyperref}
 
 \\geometry{margin=0.75in}
 \\titleformat{\\section}{\\large\\bfseries}{}{0em}{}
@@ -379,11 +384,11 @@ function generateExecutiveLatex(resume: Resume): string {
   sections.push(`\\documentclass[11pt,a4paper]{article}
 \\\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
-\\\usepackage{geometry}
-\\\usepackage{xcolor}
+\\usepackage{geometry}
+\\usepackage{xcolor}
 \\\usepackage{titlesec}
 \\usepackage{enumitem}
-\\usepackage{hyperref}
+\\\usepackage{hyperref}
 \\\usepackage{tikz}
 
 \\geometry{margin=0.75in}

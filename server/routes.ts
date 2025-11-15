@@ -166,6 +166,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = authReq.user!.id;
       const { resumeId } = req.body;
       
+      if (!resumeId) {
+        return res.status(400).json({ message: "Resume ID is required" });
+      }
+      
       const resume = await storage.getResume(resumeId);
       
       if (!resume) {
@@ -187,26 +191,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       const chunks: Buffer[] = [];
+      let streamEnded = false;
       
       pdfStream.on('data', (chunk: Buffer) => {
         chunks.push(chunk);
       });
       
-      pdfStream.on('end', () => {
-        const pdfBuffer = Buffer.concat(chunks);
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="${resume.fullName || 'Resume'}.pdf"`);
-        res.send(pdfBuffer);
+      pdfStream.once('end', () => {
+        if (!streamEnded) {
+          streamEnded = true;
+          const pdfBuffer = Buffer.concat(chunks);
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader('Content-Disposition', `attachment; filename="${resume.fullName || 'Resume'}_latex.pdf"`);
+          res.send(pdfBuffer);
+        }
       });
       
-      pdfStream.on('error', (err: Error) => {
-        console.error("LaTeX PDF generation error:", err);
-        res.status(500).json({ message: "Failed to generate PDF from LaTeX" });
+      pdfStream.once('error', (err: Error) => {
+        if (!streamEnded) {
+          streamEnded = true;
+          console.error("LaTeX PDF generation error:", err);
+          if (!res.headersSent) {
+            res.status(500).json({ message: "Failed to generate PDF from LaTeX. Please ensure LaTeX is installed on the server." });
+          }
+        }
+        pdfStream.destroy();
       });
       
     } catch (error) {
       console.error("Error generating LaTeX PDF:", error);
-      res.status(500).json({ message: "Failed to generate PDF" });
+      if (!res.headersSent) {
+        res.status(500).json({ message: "Failed to generate PDF" });
+      }
     }
   });
 
@@ -216,6 +232,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const authReq = req as AuthRequest;
       const userId = authReq.user!.id;
       const { resumeId } = req.body;
+      
+      if (!resumeId) {
+        return res.status(400).json({ message: "Resume ID is required" });
+      }
       
       const resume = await storage.getResume(resumeId);
       
@@ -230,12 +250,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const latexSource = generateLatexSource(resume);
       
-      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
       res.setHeader('Content-Disposition', `attachment; filename="${resume.fullName || 'Resume'}.tex"`);
       res.send(latexSource);
     } catch (error) {
       console.error("Error generating LaTeX source:", error);
-      res.status(500).json({ message: "Failed to generate LaTeX source" });
+      if (!res.headersSent) {
+        res.status(500).json({ message: "Failed to generate LaTeX source" });
+      }
     }
   });
 

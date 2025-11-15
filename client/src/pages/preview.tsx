@@ -194,7 +194,7 @@ export default function Preview() {
               <ThemeToggle />
               <Button
                 onClick={() => downloadMutation.mutate()}
-                disabled={downloadMutation.isPending}
+                disabled={!resume || downloadMutation.isPending}
                 data-testid="button-download-pdf"
                 className="hover-elevate active-elevate-2"
               >
@@ -203,7 +203,7 @@ export default function Preview() {
               </Button>
               <Button
                 onClick={() => downloadLatexMutation.mutate()}
-                disabled={downloadLatexMutation.isPending}
+                disabled={!resume || downloadLatexMutation.isPending}
                 variant="outline"
                 data-testid="button-download-latex-pdf"
                 className="hover-elevate active-elevate-2"
@@ -213,7 +213,7 @@ export default function Preview() {
               </Button>
               <Button
                 onClick={() => downloadLatexSourceMutation.mutate()}
-                disabled={downloadLatexSourceMutation.isPending}
+                disabled={!resume || downloadLatexSourceMutation.isPending}
                 variant="outline"
                 data-testid="button-download-latex-source"
                 className="hover-elevate active-elevate-2"
@@ -435,7 +435,7 @@ export default function Preview() {
             </Button>
             <Button
               onClick={() => downloadMutation.mutate()}
-              disabled={downloadMutation.isPending}
+              disabled={!resume || downloadMutation.isPending}
               data-testid="button-download"
               className="hover-elevate active-elevate-2"
             >
@@ -444,7 +444,7 @@ export default function Preview() {
             </Button>
             <Button
               onClick={() => downloadLatexMutation.mutate()}
-              disabled={downloadLatexMutation.isPending}
+              disabled={!resume || downloadLatexMutation.isPending}
               variant="outline"
               data-testid="button-download-latex"
               className="hover-elevate active-elevate-2"
@@ -454,7 +454,7 @@ export default function Preview() {
             </Button>
             <Button
               onClick={() => downloadLatexSourceMutation.mutate()}
-              disabled={downloadLatexSourceMutation.isPending}
+              disabled={!resume || downloadLatexSourceMutation.isPending}
               variant="outline"
               data-testid="button-latex-source"
               className="hover-elevate active-elevate-2"
