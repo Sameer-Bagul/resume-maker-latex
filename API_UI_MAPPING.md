@@ -9,27 +9,37 @@ This document maps all backend API endpoints to their corresponding frontend UI 
 
 ### 1. POST `/api/auth/register`
 **Backend:** `server/controllers/auth.controller.ts` → `register()`
-**Frontend:** Currently accessed via "Get Started" button → redirects to `/api/login`
+**Frontend:** 
+- `client/src/components/auth-dialog.tsx` - Registration form in modal
+- `client/src/pages/landing.tsx` - "Get Started" buttons trigger registration modal
+- `client/src/hooks/useAuth.ts` - `registerAsync()` function
 **Purpose:** Register a new user account
 **Request Body:**
 ```typescript
 {
   email: string;
   password: string;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
 }
 ```
 **Response:** JWT token + user object
-**UI Flow:** Landing page → Get Started button → Registration form
+**UI Flow:** 
+1. User clicks "Get Started" button on landing page
+2. Registration modal opens with form fields
+3. User fills: firstName, lastName, email, password
+4. Form validated with Zod schema
+5. POST /api/auth/register called via `registerAsync()`
+6. JWT token stored, user redirected to dashboard
 
 ---
 
 ### 2. POST `/api/auth/login`
 **Backend:** `server/controllers/auth.controller.ts` → `login()`
 **Frontend:** 
-- `client/src/pages/landing.tsx` - "Log In" and "Get Started" buttons
-- Links to `/api/login` endpoint
+- `client/src/components/auth-dialog.tsx` - Login form in modal
+- `client/src/pages/landing.tsx` - "Log In" button triggers login modal
+- `client/src/hooks/useAuth.ts` - `loginAsync()` function
 **Purpose:** Authenticate existing user
 **Request Body:**
 ```typescript
@@ -39,7 +49,13 @@ This document maps all backend API endpoints to their corresponding frontend UI 
 }
 ```
 **Response:** JWT token + user object
-**UI Flow:** Landing page → Log In button → Login form
+**UI Flow:** 
+1. User clicks "Log In" button on landing page
+2. Login modal opens with email/password fields
+3. User enters credentials
+4. Form validated with Zod schema
+5. POST /api/auth/login called via `loginAsync()`
+6. JWT token stored, user redirected to dashboard
 
 ---
 
@@ -171,9 +187,24 @@ This document maps all backend API endpoints to their corresponding frontend UI 
 ### Landing Page (`client/src/pages/landing.tsx`)
 **APIs Used:**
 - None directly (public page)
+- Opens `AuthDialog` component which calls authentication APIs
 **Actions:**
-- "Log In" button → Links to `/api/login`
-- "Get Started" button → Links to `/api/login`
+- "Log In" button → Opens login modal (`AuthDialog` in login mode)
+- "Get Started" buttons → Opens registration modal (`AuthDialog` in register mode)
+- "See Examples" button → Placeholder for future feature
+
+### Auth Dialog (`client/src/components/auth-dialog.tsx`)
+**APIs Used:**
+- `POST /api/auth/login` - Login form submission
+- `POST /api/auth/register` - Registration form submission
+**Features:**
+- Modal dialog with login/register forms
+- Switch between login and register modes
+- Form validation using Zod + react-hook-form
+- Real-time error display
+- Loading states during API calls
+- Success notifications
+- Auto-redirect to dashboard on success
 
 ---
 
@@ -300,10 +331,45 @@ Frontend forms also use Zod validation via `react-hook-form` with `zodResolver`.
 
 ## Authentication Flow
 
+### User Registration Flow:
 ```
-User Visit → Check JWT token → 
-  If valid → GET /api/auth/user → Route to Dashboard
-  If invalid → Route to Landing Page
+1. User visits landing page (no JWT)
+2. User clicks "Get Started" button
+3. AuthDialog modal opens in register mode
+4. User fills registration form:
+   - First Name
+   - Last Name  
+   - Email
+   - Password (min 6 characters)
+5. Form validation (Zod schema)
+6. POST /api/auth/register
+7. Server creates user with hashed password
+8. Server returns JWT token + user object
+9. Frontend stores JWT token
+10. User automatically redirected to Dashboard
+```
+
+### User Login Flow:
+```
+1. User visits landing page (no JWT)
+2. User clicks "Log In" button
+3. AuthDialog modal opens in login mode
+4. User enters email and password
+5. Form validation (Zod schema)
+6. POST /api/auth/login
+7. Server verifies credentials
+8. Server returns JWT token + user object
+9. Frontend stores JWT token
+10. User automatically redirected to Dashboard
+```
+
+### App Initialization Flow:
+```
+User Visit → Check for JWT token →
+  If valid → GET /api/auth/user → 
+    Success → Route to Dashboard
+    Error 401 → Remove token → Route to Landing Page
+  If no token → Route to Landing Page
 ```
 
 **Protected Routes:**

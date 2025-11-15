@@ -1,12 +1,33 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthDialog } from "@/components/auth-dialog";
 import { FileText, Zap, Download, CheckCircle, Sparkles, Eye } from "lucide-react";
 
 export default function Landing() {
+  const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "register">("login");
+
+  const openLoginDialog = () => {
+    setAuthMode("login");
+    setAuthDialogOpen(true);
+  };
+
+  const openRegisterDialog = () => {
+    setAuthMode("register");
+    setAuthDialogOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <AuthDialog 
+        open={authDialogOpen} 
+        onOpenChange={setAuthDialogOpen}
+        defaultMode={authMode}
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,18 +42,18 @@ export default function Landing() {
               <ThemeToggle />
               <Button 
                 variant="outline" 
-                asChild
+                onClick={openLoginDialog}
                 data-testid="button-login"
                 className="hover-elevate active-elevate-2"
               >
-                <a href="/api/login">Log In</a>
+                Log In
               </Button>
               <Button 
-                asChild
+                onClick={openRegisterDialog}
                 data-testid="button-get-started"
                 className="hover-elevate active-elevate-2"
               >
-                <a href="/api/login">Get Started</a>
+                Get Started
               </Button>
             </div>
           </div>
@@ -66,11 +87,11 @@ export default function Landing() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button 
                 size="lg" 
-                asChild
+                onClick={openRegisterDialog}
                 data-testid="button-hero-start"
                 className="h-12 px-8 text-base font-semibold hover-elevate active-elevate-2"
               >
-                <a href="/api/login">Start Building Free</a>
+                Start Building Free
               </Button>
               <Button 
                 size="lg" 
@@ -201,11 +222,11 @@ export default function Landing() {
               <div className="mt-8">
                 <Button 
                   size="lg" 
-                  asChild
+                  onClick={openRegisterDialog}
                   data-testid="button-cta-start"
                   className="h-12 px-8 text-base font-semibold hover-elevate active-elevate-2"
                 >
-                  <a href="/api/login">Start Building Now</a>
+                  Start Building Now
                 </Button>
               </div>
             </div>
