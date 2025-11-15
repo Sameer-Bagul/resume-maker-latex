@@ -71,7 +71,7 @@ app.use((req, res, next) => {
     app.use(notFoundHandler);
     app.use(errorHandler);
 
-    log(`🚀 Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
+    log(`🚀 Server running on : http://localhost:${env.PORT} in ${env.NODE_ENV} mode`);
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     process.exit(1);
