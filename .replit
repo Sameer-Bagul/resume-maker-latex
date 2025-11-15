@@ -15,10 +15,10 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Resume Maker App"
+args = "Start application"
 
 [[workflows.workflow]]
-name = "Resume Maker App"
+name = "Start application"
 author = "agent"
 
 [[workflows.workflow.tasks]]
@@ -34,7 +34,7 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 41115
+localPort = 42399
 externalPort = 3000
 
 [deployment]

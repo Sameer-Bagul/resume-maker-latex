@@ -55,9 +55,6 @@ app.use((req, res, next) => {
     await connectDB();
     
     registerRoutes(app);
-    
-    app.use(notFoundHandler);
-    app.use(errorHandler);
 
     const server = app.listen({
       port: env.PORT,
@@ -70,6 +67,9 @@ app.use((req, res, next) => {
     } else {
       serveStatic(app);
     }
+    
+    app.use(notFoundHandler);
+    app.use(errorHandler);
 
     log(`🚀 Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
   } catch (error) {
