@@ -1,33 +1,22 @@
-// Reference: Replit Auth integration
+// API Routes with JWT Authentication
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated, type AuthRequest } from "./auth";
 import { insertResumeSchema, updateResumeSchema } from "@shared/schema";
 import { generateResumePDF } from "./pdf-generator";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware (Reference: Replit Auth integration)
-  await setupAuth(app);
-
-  // Auth routes (Reference: Replit Auth integration)
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
+  // Setup JWT authentication routes
+  setupAuth(app);
 
   // Resume routes - all protected with authentication
   
   // Get current resume (most recently updated)
-  app.get("/api/resumes/current", isAuthenticated, async (req: any, res) => {
+  app.get("/api/resumes/current", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const resume = await storage.getCurrentResume(userId);
       
       if (!resume) {
@@ -42,9 +31,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get all resumes for user
-  app.get("/api/resumes", isAuthenticated, async (req: any, res) => {
+  app.get("/api/resumes", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const resumeList = await storage.getResumesByUserId(userId);
       res.json(resumeList);
     } catch (error) {
@@ -54,9 +44,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get specific resume
-  app.get("/api/resumes/:id", isAuthenticated, async (req: any, res) => {
+  app.get("/api/resumes/:id", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const { id } = req.params;
       const resume = await storage.getResume(id);
       
@@ -77,9 +68,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Create new resume
-  app.post("/api/resumes", isAuthenticated, async (req: any, res) => {
+  app.post("/api/resumes", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const validatedData = insertResumeSchema.parse({
         ...req.body,
         userId,
@@ -97,9 +89,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Update resume
-  app.patch("/api/resumes/:id", isAuthenticated, async (req: any, res) => {
+  app.patch("/api/resumes/:id", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const { id } = req.params;
       
       const validatedData = updateResumeSchema.parse(req.body);
@@ -121,9 +114,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Delete resume
-  app.delete("/api/resumes/:id", isAuthenticated, async (req: any, res) => {
+  app.delete("/api/resumes/:id", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const { id } = req.params;
       
       await storage.deleteResume(id, userId);
@@ -135,9 +129,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download resume as PDF
-  app.post("/api/resumes/download", isAuthenticated, async (req: any, res) => {
+  app.post("/api/resumes/download", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const authReq = req as AuthRequest;
+      const userId = authReq.user!.id;
       const { resumeId } = req.body;
       
       const resume = await storage.getResume(resumeId);
