@@ -58,6 +58,8 @@ export default function Dashboard() {
   });
 
   const handleSave = (data: Partial<Resume>) => {
+    console.log('Saving resume data:', data);
+    console.log('Current resume in state:', resume);
     saveResumeMutation.mutate(data);
   };
 

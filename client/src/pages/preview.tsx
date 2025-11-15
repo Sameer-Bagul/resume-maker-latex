@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { FileText, Download, ArrowLeft, FileCode } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { getAuthHeaders } from "@/lib/authUtils";
 import type { Resume } from "@shared/schema";
 
 export default function Preview() {
@@ -33,16 +34,32 @@ export default function Preview() {
     enabled: !!user,
   });
 
+  // Log resume data for debugging
+  useEffect(() => {
+    if (resume) {
+      console.log('Resume loaded:', resume);
+      console.log('Resume ID:', resume.id);
+      console.log('Resume _id:', (resume as any)._id);
+    }
+  }, [resume]);
+
   // Download PDF mutation (PDFKit)
   const downloadMutation = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/resumes/download", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...getAuthHeaders(), // Include Authorization header
+        },
+        credentials: "include",
         body: JSON.stringify({ resumeId: resume?.id }),
       });
       
-      if (!response.ok) throw new Error("Failed to download resume");
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: "Failed to download resume" }));
+        throw new Error(error.message || "Failed to download resume");
+      }
       
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -60,10 +77,10 @@ export default function Preview() {
         description: "Your resume has been downloaded.",
       });
     },
-    onError: () => {
+    onError: (error: Error) => {
       toast({
         title: "Error",
-        description: "Failed to download resume. Please try again.",
+        description: error.message || "Failed to download resume. Please try again.",
         variant: "destructive",
       });
     },
@@ -74,11 +91,18 @@ export default function Preview() {
     mutationFn: async () => {
       const response = await fetch("/api/resumes/download-latex", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...getAuthHeaders(), // Include Authorization header
+        },
+        credentials: "include",
         body: JSON.stringify({ resumeId: resume?.id }),
       });
       
-      if (!response.ok) throw new Error("Failed to download LaTeX PDF");
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: "Failed to download LaTeX PDF" }));
+        throw new Error(error.message || "Failed to download LaTeX PDF");
+      }
       
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -96,7 +120,7 @@ export default function Preview() {
         description: "Your LaTeX resume PDF has been downloaded.",
       });
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast({
         title: "Error",
         description: error.message || "Failed to download LaTeX PDF. Please try again.",
@@ -110,11 +134,18 @@ export default function Preview() {
     mutationFn: async () => {
       const response = await fetch("/api/resumes/download-latex-source", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...getAuthHeaders(), // Include Authorization header
+        },
+        credentials: "include",
         body: JSON.stringify({ resumeId: resume?.id }),
       });
       
-      if (!response.ok) throw new Error("Failed to download LaTeX source");
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: "Failed to download LaTeX source" }));
+        throw new Error(error.message || "Failed to download LaTeX source");
+      }
       
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -132,10 +163,10 @@ export default function Preview() {
         description: "Your LaTeX source file has been downloaded.",
       });
     },
-    onError: () => {
+    onError: (error: Error) => {
       toast({
         title: "Error",
-        description: "Failed to download LaTeX source. Please try again.",
+        description: error.message || "Failed to download LaTeX source. Please try again.",
         variant: "destructive",
       });
     },

@@ -92,6 +92,7 @@ export type Experience = z.infer<typeof experienceSchema>;
 
 // Resume interface
 export interface IResume extends Document {
+  id?: string;  // Added for API responses (converted from _id)
   userId: mongoose.Types.ObjectId;
   title: string;
   

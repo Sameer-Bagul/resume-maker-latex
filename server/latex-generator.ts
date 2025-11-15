@@ -41,13 +41,13 @@ function generateModernLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
-\\\usepackage[utf8]{inputenc}
+\\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
 \\usepackage{geometry}
 \\usepackage{xcolor}
-\\\usepackage{titlesec}
+\\usepackage{titlesec}
 \\usepackage{enumitem}
-\\\usepackage{hyperref}
+\\usepackage{hyperref}
 \\usepackage{parskip}
 
 \\geometry{margin=0.75in}
@@ -298,11 +298,11 @@ function generateMinimalLatex(resume: Resume): string {
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
 \\usepackage[utf8]{inputenc}
-\\\usepackage[T1]{fontenc}
+\\usepackage[T1]{fontenc}
 \\usepackage{geometry}
-\\\usepackage{titlesec}
-\\\usepackage{enumitem}
-\\\usepackage{hyperref}
+\\usepackage{titlesec}
+\\usepackage{enumitem}
+\\usepackage{hyperref}
 
 \\geometry{margin=0.75in}
 \\titleformat{\\section}{\\large\\bfseries}{}{0em}{}
@@ -318,7 +318,7 @@ function generateMinimalLatex(resume: Resume): string {
 \\setlength{\\parindent}{0pt}
 
 \\begin{document}
-
+`);
 
   if (resume.includePersonalDetails) {
     sections.push(`{\\LARGE\\bfseries ${escapeLatex(resume.fullName || 'Your Name')}}\\\\[0.2em]`);
