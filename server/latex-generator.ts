@@ -41,14 +41,14 @@ function generateModernLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
-\\usepackage[utf8]{inputenc}
-\\\usepackage[T1]{fontenc}
+\\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
 \\usepackage{geometry}
 \\usepackage{xcolor}
 \\\usepackage{titlesec}
-\\\usepackage{enumitem}
-\\usepackage{hyperref}
-\\\usepackage{parskip}
+\\usepackage{enumitem}
+\\\usepackage{hyperref}
+\\usepackage{parskip}
 
 \\geometry{margin=0.75in}
 \\definecolor{accentcolor}{HTML}{BFFF0B}
@@ -167,7 +167,7 @@ function generateModernLatex(resume: Resume): string {
       sections.push(`\\textbf{GitHub:} \\url{${escapeUrl(resume.githubUrl)}}\\\\`);
     }
     if (resume.linkedinUrl) {
-      sections.push(`\\textbf{LinkedIn:} \\\url{${escapeUrl(resume.linkedinUrl)}}\\\\`);
+      sections.push(`\\textbf{LinkedIn:} \\url{${escapeUrl(resume.linkedinUrl)}}\\\\`);
     }
     if (resume.youtubeUrl) {
       sections.push(`\\textbf{YouTube:} \\url{${escapeUrl(resume.youtubeUrl)}}\\\\`);
@@ -187,11 +187,11 @@ function generateClassicLatex(resume: Resume): string {
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
 \\usepackage[utf8]{inputenc}
-\\\usepackage[T1]{fontenc}
-\\\usepackage{geometry}
-\\\usepackage{titlesec}
+\\usepackage[T1]{fontenc}
+\\usepackage{geometry}
+\\usepackage{titlesec}
 \\usepackage{enumitem}
-\\\usepackage{hyperref}
+\\usepackage{hyperref}
 
 \\geometry{margin=1in}
 \\titleformat{\\section}{\\Large\\bfseries}{}{0em}{}[\\titlerule]
@@ -298,11 +298,11 @@ function generateMinimalLatex(resume: Resume): string {
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
 \\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
+\\\usepackage[T1]{fontenc}
 \\usepackage{geometry}
 \\\usepackage{titlesec}
-\\usepackage{enumitem}
-\\usepackage{hyperref}
+\\\usepackage{enumitem}
+\\\usepackage{hyperref}
 
 \\geometry{margin=0.75in}
 \\titleformat{\\section}{\\large\\bfseries}{}{0em}{}
@@ -318,7 +318,7 @@ function generateMinimalLatex(resume: Resume): string {
 \\setlength{\\parindent}{0pt}
 
 \\begin{document}
-`);
+
 
   if (resume.includePersonalDetails) {
     sections.push(`{\\LARGE\\bfseries ${escapeLatex(resume.fullName || 'Your Name')}}\\\\[0.2em]`);
@@ -382,14 +382,14 @@ function generateExecutiveLatex(resume: Resume): string {
   const sections: string[] = [];
 
   sections.push(`\\documentclass[11pt,a4paper]{article}
-\\\usepackage[utf8]{inputenc}
+\\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
 \\usepackage{geometry}
 \\usepackage{xcolor}
-\\\usepackage{titlesec}
+\\usepackage{titlesec}
 \\usepackage{enumitem}
-\\\usepackage{hyperref}
-\\\usepackage{tikz}
+\\usepackage{hyperref}
+\\usepackage{tikz}
 
 \\geometry{margin=0.75in}
 \\definecolor{navy}{HTML}{1a2332}
