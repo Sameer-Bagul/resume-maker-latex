@@ -14,16 +14,16 @@ function generateProfessionalLatex(resume: Resume): string {
 
 % Packages
 \usepackage[empty]{fullpage}
-\\usepackage{titlesec}
-\\usepackage[usenames,dvipsnames]{color}
-\\usepackage{verbatim}
-\\usepackage{enumitem}
-\\\usepackage[hidelinks]{hyperref}
-\\usepackage[english]{babel}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
 \usepackage{tabularx}
-\\usepackage{multicol}
+\usepackage{multicol}
 \usepackage{graphicx}
-\RequirePackage{xcolo
+\RequirePackage{xcolor}
 
 % Color Scheme
 \definecolor{cvblue}{HTML}{0E5484}
@@ -72,6 +72,10 @@ function generateProfessionalLatex(resume: Resume): string {
 `);
 
   if (resume.includePersonalDetails) {
+    if (resume.photoUrl) {
+      sections.push(`\\begin{minipage}[t]{0.7\\textwidth}`);
+    }
+    
     sections.push(`\\begin{center}`);
     sections.push(`{\\huge \\textbf{${escapeLatex(resume.fullName || 'Your Name')}}} \\\\[2pt]`);
     
@@ -104,6 +108,16 @@ function generateProfessionalLatex(resume: Resume): string {
 
     sections.push(`\\vspace{-10pt}`);
     sections.push(`\\end{center}`);
+    
+    if (resume.photoUrl) {
+      sections.push(`\\end{minipage}`);
+      sections.push(`\\hfill`);
+      sections.push(`\\begin{minipage}[t]{0.25\\textwidth}`);
+      sections.push(`\\begin{flushright}`);
+      sections.push(`\\includegraphics[width=0.9\\textwidth]{${escapeUrl(resume.photoUrl)}}`);
+      sections.push(`\\end{flushright}`);
+      sections.push(`\\end{minipage}`);
+    }
   }
 
   if (resume.summary) {
@@ -139,15 +153,15 @@ function generateProfessionalLatex(resume: Resume): string {
     
     resume.education.forEach((edu) => {
       const dateStr = `${escapeLatex(edu.startDate)} -- ${edu.current ? 'Present' : escapeLatex(edu.endDate)}`;
-      const degreeField = `${escapeLatex(edu.degree)} - ${escapeLatex(edu.field)}${edu.gpa ? ` \\\\hfill \\\\textbf{GPA: ${escapeLatex(edu.gpa)}}` : ''}`;
-      sections.push(`\\\\resumeSubheading`);
+      const degreeField = `${escapeLatex(edu.degree)} - ${escapeLatex(edu.field)}${edu.gpa ? ` \\hfill \\textbf{GPA: ${escapeLatex(edu.gpa)}}` : ''}`;
+      sections.push(`\\resumeSubheading`);
       sections.push(`{${escapeLatex(edu.institution)}}{}`);
-      sections.push(`{${degreeField}}{\\\\textbf{${dateStr}}}`);
+      sections.push(`{${degreeField}}{\\textbf{${dateStr}}}`);
       
       if (edu.description) {
-        sections.push(`\\\\resumeItemListStart`);
-        sections.push(`\\\\resumeItem{${escapeLatex(edu.description)}}`);
-        sections.push(`\\\\resumeItemListEnd`);
+        sections.push(`\\resumeItemListStart`);
+        sections.push(`\\resumeItem{${escapeLatex(edu.description)}}`);
+        sections.push(`\\resumeItemListEnd`);
       }
     });
     

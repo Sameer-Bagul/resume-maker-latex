@@ -29,7 +29,13 @@ ResumeCraft is a professional resume builder application that helps users create
 │   ├── db.ts           # MongoDB connection
 │   ├── auth.ts         # JWT authentication
 │   ├── storage.ts      # Data access layer
-│   └── pdf-generator.ts # PDF generation logic
+│   ├── pdf-generator.ts # PDF generation logic
+│   ├── latex-generator.ts # LaTeX template orchestrator
+│   └── templates/       # Modular LaTeX templates
+│       ├── template-base.ts  # Base interface and utilities
+│       ├── modern.ts         # Modern template
+│       ├── professional.ts   # Professional template with photo
+│       └── index.ts          # Template registry
 ├── shared/              # Shared types and schemas
 │   └── schema.ts       # Mongoose models and schemas
 └── attached_assets/     # Static assets
@@ -197,18 +203,40 @@ function MyComponent() {
 
 ## Recent Changes
 
+### 2025-11-15: Modular LaTeX Template System
+- **Created Modular Template Architecture**
+  - Refactored LaTeX generation into a pluggable template system
+  - Base template interface (`LatexTemplate`) with `generate()` method
+  - Centralized LaTeX escaping utilities (`escapeLatex`, `escapeUrl`)
+  - Template registry for easy addition of new templates
+- **Modern Template**
+  - Clean, minimalist design with accent colors
+  - Optimized for ATS compatibility
+  - Includes all resume sections with proper formatting
+- **Professional Template**
+  - Based on industry-standard professional resume design
+  - Optional photo support with minipage layout
+  - Circular photo rendering when `photoUrl` is provided
+  - Custom LaTeX commands for consistent styling
+  - Skill categorization support
+  - GitHub and project URLs with proper formatting
+- **Fixed Missing Data in PDFs**
+  - Project URLs and GitHub URLs now render correctly
+  - Skill categories properly grouped and displayed
+  - Education descriptions included
+  - All social links working (LinkedIn, GitHub, Portfolio)
+- **LaTeX Quality Improvements**
+  - Correct backslash escaping throughout
+  - Proper handling of special characters
+  - Valid LaTeX syntax verified by architect review
+  - Ready for compilation with pdflatex/xelatex
+
 ### 2025-11-15: LaTeX PDF Generation Feature
 - **Added LaTeX PDF Generation**
   - Installed node-latex package for LaTeX compilation
-  - Created comprehensive LaTeX template generator for all resume templates (Modern, Classic, Minimal, Executive)
   - Added backend routes for LaTeX PDF generation and source download
   - Enhanced preview page with buttons to download LaTeX PDFs and .tex source files
   - Fixed missing social links section in preview page
-- **LaTeX Templates Include:**
-  - Professional formatting with proper typography
-  - Template-specific styling (colors, fonts, layouts)
-  - Proper LaTeX escaping for special characters
-  - Support for all resume sections and data
 
 ### 2025-11-15: MERN Stack Conversion
 - **Converted from PostgreSQL to MongoDB Atlas**
