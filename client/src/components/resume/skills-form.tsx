@@ -64,33 +64,32 @@ export function SkillsForm({ resume, onSave, isSaving }: SkillsFormProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="font-heading text-2xl font-bold">Skills</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Add your technical and professional skills
-          </p>
+    <Form {...form}>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-heading text-2xl font-bold">Skills</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Add your technical and professional skills
+            </p>
+          </div>
+          <FormField
+            control={form.control}
+            name="includeSkills"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2">
+                <FormLabel className="text-sm">Include in resume</FormLabel>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    data-testid="switch-include-skills"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
-        <FormField
-          control={form.control}
-          name="includeSkills"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-2">
-              <FormLabel className="text-sm">Include in resume</FormLabel>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  data-testid="switch-include-skills"
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-      </div>
-
-      <Form {...form}>
         <div className="space-y-4">
           <div className="flex gap-2">
             <FormField
@@ -190,7 +189,7 @@ export function SkillsForm({ resume, onSave, isSaving }: SkillsFormProps) {
             {isSaving ? "Saving..." : "Save Skills"}
           </Button>
         </div>
-      </Form>
-    </div>
+      </div>
+    </Form>
   );
 }

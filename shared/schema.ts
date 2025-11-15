@@ -218,6 +218,7 @@ resumeSchema.index({ userId: 1, updatedAt: -1 });
 export const Resume = mongoose.model<IResume>('Resume', resumeSchema);
 
 export type ResumeType = IResume;
+export type Resume = IResume; // Add this type alias for component imports
 
 // Zod validation schemas for API requests
 export const insertResumeSchema = z.object({

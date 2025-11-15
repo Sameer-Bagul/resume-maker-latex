@@ -45,33 +45,33 @@ export function PersonalDetailsForm({ resume, onSave, isSaving }: PersonalDetail
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="font-heading text-2xl font-bold">Personal Details</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Tell us about yourself and your career goals
-          </p>
+    <Form {...form}>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-heading text-2xl font-bold">Personal Details</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tell us about yourself and your career goals
+            </p>
+          </div>
+          <FormField
+            control={form.control}
+            name="includePersonalDetails"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2">
+                <FormLabel className="text-sm">Include in resume</FormLabel>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    data-testid="switch-include-personal"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
-        <FormField
-          control={form.control}
-          name="includePersonalDetails"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-2">
-              <FormLabel className="text-sm">Include in resume</FormLabel>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  data-testid="switch-include-personal"
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-      </div>
 
-      <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid gap-6 sm:grid-cols-2">
             <FormField
@@ -194,7 +194,7 @@ export function PersonalDetailsForm({ resume, onSave, isSaving }: PersonalDetail
             {isSaving ? "Saving..." : "Save Changes"}
           </Button>
         </form>
-      </Form>
-    </div>
+      </div>
+    </Form>
   );
 }

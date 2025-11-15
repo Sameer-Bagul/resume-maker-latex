@@ -47,31 +47,31 @@ export function PhotoSocialForm({ resume, onSave, isSaving }: PhotoSocialFormPro
   const photoUrl = form.watch("photoUrl");
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="font-heading text-2xl font-bold">Photo & Social Links</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Add your photo and professional social media profiles
-          </p>
+    <Form {...form}>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-heading text-2xl font-bold">Photo & Social Links</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Add your photo and professional social media profiles
+            </p>
+          </div>
+          <FormField
+            control={form.control}
+            name="includeSocialLinks"
+            render={({ field }) => (
+              <div className="flex items-center gap-2">
+                <label className="text-sm">Include in resume</label>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  data-testid="switch-include-social"
+                />
+              </div>
+            )}
+          />
         </div>
-        <FormField
-          control={form.control}
-          name="includeSocialLinks"
-          render={({ field }) => (
-            <div className="flex items-center gap-2">
-              <label className="text-sm">Include in resume</label>
-              <Switch
-                checked={field.value}
-                onCheckedChange={field.onChange}
-                data-testid="switch-include-social"
-              />
-            </div>
-          )}
-        />
-      </div>
 
-      <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Photo Section */}
           <Card className="p-6 bg-muted/30">
@@ -217,7 +217,7 @@ export function PhotoSocialForm({ resume, onSave, isSaving }: PhotoSocialFormPro
             {isSaving ? "Saving..." : "Save Photo & Links"}
           </Button>
         </form>
-      </Form>
-    </div>
+      </div>
+    </Form>
   );
 }
